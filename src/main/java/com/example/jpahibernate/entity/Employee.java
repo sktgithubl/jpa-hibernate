@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -24,8 +25,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name="EmployeeType")
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Inheritance(strategy=InheritanceType.JOINED)
-@Entity
+//@Inheritance(strategy=InheritanceType.JOINED)
+@MappedSuperclass
+//@Entity
 public abstract class Employee {
 	
 	@Id
