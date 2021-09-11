@@ -3,14 +3,14 @@ package com.example.jpahibernate.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import javax.transaction.Transactional;
-
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.jpahibernate.JpaHibernateApplication;
 import com.example.jpahibernate.entity.Course;
@@ -52,7 +52,7 @@ public class CourseRepositoryTest {
 	}
 	
 	@Test
-	@Transactional
+	@Transactional(isolation=Isolation.READ_COMMITTED)
 	public void retrieveReviewsByCourseId() {
 		Course course = courseRepository.findById(10003L);
 		logger.info("{}", course.getReviews());
