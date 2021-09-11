@@ -88,5 +88,10 @@ public class Course {
 
 	public List<Student> getStudents() {
 		return students;
-	}    
+	}
+
+	@Override
+	public String toString() {
+		return "Course [name=" + name + "]";
+	}
 }
