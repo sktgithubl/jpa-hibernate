@@ -5,15 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.example.jpahibernate.JpaHibernateApplication;
@@ -46,5 +52,24 @@ public class CourseSpringDataRepositoryTest {
 //		repository.save(course);
 		logger.info("Course -> {} ", repository.findAll());
 		logger.info("Count -> {} ", repository.count());
+	}
+	
+	@Test
+	public void sort() {
+		logger.info("Course -> {} ", repository.findAll(Sort.by(Sort.Direction.ASC, "name")));
+//		Course -> [Course [name=Physics], Course [name=Math], Course [name=Computer Science]]
+		logger.info("Count -> {} ", repository.count());
+	}
+	
+	@Test
+	public void pagination() {
+		PageRequest pageRequest = PageRequest.of(0, 5);
+		
+		Page<Course> firstPage = repository.findAll(pageRequest);
+		logger.info("Course -> {} ", firstPage.getContent());
+		
+		Pageable secondPageable = firstPage.nextPageable();
+		Page<Course> secondPage = repository.findAll(secondPageable);
+		logger.info("Coruse -> {} ", secondPage.getContent());
 	}
 }
