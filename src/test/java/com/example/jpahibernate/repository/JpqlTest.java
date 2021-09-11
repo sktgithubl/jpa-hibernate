@@ -3,6 +3,7 @@ package com.example.jpahibernate.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.junit.jupiter.api.Test;
@@ -85,5 +86,44 @@ public class JpqlTest {
 		logger.info("Results -> {}", resultList);
 		//Results -> [Student [name=Sourav], Student [name=Chirantan]]
 		return;
+	}
+	
+	//like
+	//Between 100 and 1000
+	//is null
+	//upper, lower, trim, length
+	
+	//join => select c, s from Course c JOIN c.students s
+	//left join => select c, s from Course c LEFT JOIN c.students s
+	//cross join -> select c, s from Course c , Student s
+	
+	@Test
+	public void join() {
+		Query query = em.createQuery("select c, s from Course c JOIN c.students s");
+		List<Object[]> resultList = query.getResultList();
+		logger.info("Results Size -> {}", resultList.size());
+		for(Object[] result: resultList) {
+			logger.info("Course -> {}, Student -> {}", result[0], result[1]);
+		}
+	}
+	
+	@Test
+	public void left_join() {
+		Query query = em.createQuery("select c, s from Course c LEFT JOIN c.students s");
+		List<Object[]> resultList = query.getResultList();
+		logger.info("Results Size -> {}", resultList.size());
+		for(Object[] result: resultList) {
+			logger.info("Course -> {}, Student -> {}", result[0], result[1]);
+		}
+	}
+	
+	@Test
+	public void cross_join() {
+		Query query = em.createQuery("select c, s from Course c, Student s");
+		List<Object[]> resultList = query.getResultList();
+		logger.info("Results Size -> {}", resultList.size());
+		for(Object[] result: resultList) {
+			logger.info("Course -> {}, Student -> {}", result[0], result[1]);
+		}
 	}
 }
