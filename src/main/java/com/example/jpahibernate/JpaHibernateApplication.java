@@ -39,9 +39,9 @@ public class JpaHibernateApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<Review> reviews = new ArrayList<>( Arrays.asList(
-				new Review("1", "Bad"),
-				new Review("2", "veryBad")));
+//		List<Review> reviews = new ArrayList<>( Arrays.asList(
+//				new Review("1", "Bad"),
+//				new Review("2", "veryBad")));
 //		courseRepository.playWithEntityManager();
 //		studentRepository.saveStudentWithPassword();
 //		courseRepository.addHardCodedReviewsForCourse();

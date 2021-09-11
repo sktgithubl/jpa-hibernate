@@ -28,8 +28,7 @@ public class CourseSpringDataRepositoryTest {
 	
 	@Test
 	public void findById_CoursePresent() {
-		Optional<Course> courseOptional = repository.findById(10001L);
-		
+		Optional<Course> courseOptional = repository.findById(10001L);	
 		assertTrue(courseOptional.isPresent());
 	}
 	
@@ -39,5 +38,13 @@ public class CourseSpringDataRepositoryTest {
 		assertFalse(courseOptional.isPresent());
 	}
 	
-	
+	@Test
+	public void playingAroundWithSpringDataRepository() {
+//		Course course = new Course("Microservices in 100 Steps");
+//		repository.save(course);
+//		course.setName("Microservices in 100 Steps - Updated");
+//		repository.save(course);
+		logger.info("Course -> {} ", repository.findAll());
+		logger.info("Count -> {} ", repository.count());
+	}
 }
