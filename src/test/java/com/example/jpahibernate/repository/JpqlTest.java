@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.jpahibernate.JpaHibernateApplication;
 import com.example.jpahibernate.entity.Course;
+import com.example.jpahibernate.entity.Student;
 
 @SpringBootTest(classes=JpaHibernateApplication.class)
 public class JpqlTest {
@@ -73,7 +74,16 @@ public class JpqlTest {
 		TypedQuery<Course> query = em.createQuery("Select c from Course c order by size(c.students) desc", Course.class);
 		List<Course> resultList = query.getResultList();
 		logger.info("Results -> {}", resultList);
-		//Results -> [Course [name=Math], Course [name=Computer Science], Course [name=Physics]]
+		//Results -> [Course [name=Physics], Course [name=Computer Science], Course [name=Math]]
+		return;
+	}
+	
+	@Test
+	public void jpql_students_with_passport_in_a_certain_pattern() {
+		TypedQuery<Student> query = em.createQuery("Select s from Student s where s.passport.number like '%1234%'", Student.class);
+		List<Student> resultList = query.getResultList();
+		logger.info("Results -> {}", resultList);
+		//Results -> [Student [name=Sourav], Student [name=Chirantan]]
 		return;
 	}
 }
