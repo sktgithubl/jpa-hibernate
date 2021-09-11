@@ -41,4 +41,39 @@ public class JpqlTest {
 		List<Course> resultList = typedQuery.getResultList();
 		logger.info("Select c fromm Course c -> {}", resultList);
 	}
+	
+	@Test
+	public void jpql_courses_without_students() {
+		TypedQuery<Course> query = em.createQuery("Select c from Course c where c.students is empty", Course.class);
+		List<Course> resultList = query.getResultList();
+		logger.info("Results -> {}", resultList);
+		return;
+	}
+	
+	@Test
+	public void jpql_courses_with_atleast_2_students() {
+		TypedQuery<Course> query = em.createQuery("Select c from Course c where size(c.students) >= 2", Course.class);
+		List<Course> resultList = query.getResultList();
+		logger.info("Results -> {}", resultList);
+		//Results -> [Course [name=Physics]]
+		return;
+	}
+	
+	@Test
+	public void jpql_courses_with_ordered_by_students() {
+		TypedQuery<Course> query = em.createQuery("Select c from Course c order by size(c.students)", Course.class);
+		List<Course> resultList = query.getResultList();
+		logger.info("Results -> {}", resultList);
+		//Results -> [Course [name=Math], Course [name=Computer Science], Course [name=Physics]]
+		return;
+	}
+	
+	@Test
+	public void jpql_courses_with_ordered_by_desc_students() {
+		TypedQuery<Course> query = em.createQuery("Select c from Course c order by size(c.students) desc", Course.class);
+		List<Course> resultList = query.getResultList();
+		logger.info("Results -> {}", resultList);
+		//Results -> [Course [name=Math], Course [name=Computer Science], Course [name=Physics]]
+		return;
+	}
 }
