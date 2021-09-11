@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				name = "query_get_all_computer_science_course", 
 				query = "select c from Course c where name like '%Computer Science%'")
 })
+@Cacheable
 public class Course {
 	
 	@Id
@@ -39,7 +41,7 @@ public class Course {
 	@Column(name = "name", nullable=false)
 	private String name;
 	
-	@OneToMany(mappedBy = "course", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "course", fetch=FetchType.LAZY)
 	private List<Review> reviews = new ArrayList<>();
 	
 	@ManyToMany(mappedBy = "courses")
