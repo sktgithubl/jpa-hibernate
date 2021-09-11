@@ -16,10 +16,10 @@ public interface CourseSpringDataRepository extends JpaRepository<Course, Long>{
 	List<Course> findByNameOrderByIdDesc(String name);
 	List<Course> deleteByName(String name);
 	
-	@Query("Select c from Course c where name like '%Computer Science%")
+	@Query("Select c from Course c where name like '%Computer Science%'")
 	List<Course> courseWithComputerScienceInName();
 
-	@Query(value = "Select * from Course c where name like '%Computer Science%",
+	@Query(value = "Select * from Course c where name like '%Computer Science%'",
 			nativeQuery=true)
 	List<Course> courseWithComputerScienceInNameUsingNativeQuery();
 
