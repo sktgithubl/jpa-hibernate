@@ -21,7 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "Course")
 @NamedQueries(value = {
-		@NamedQuery(name = "query_get_all_course",
+		@NamedQuery(name = "query_get_all_courses",
 				query = "select c from Course c")
 })
 public class Course {
