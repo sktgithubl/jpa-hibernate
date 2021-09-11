@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ public class CriteriaQueryTest {
 	EntityManager em;
 	
 	@Test
-	public void jpql_basic() {
+	public void all_courses() {
 		//Select c from Course c
 		
 		// 1. Use Criteria builder to create a Criteria Query returning the
@@ -42,6 +43,32 @@ public class CriteriaQueryTest {
 		// 3. Define Predicated etc using Criteria Builder
 		
 		// 4. Add Predicates etc to the Criteria Query
+		
+		// 5. Build the TypedQuery using the entity manager and criteria query 
+		TypedQuery<Course> query = em.createQuery(cq.select(courseRoot));
+		List<Course> resultList = query.getResultList();
+		
+		logger.info("jpql Query: select c form Course c -> {}", resultList);
+		return;
+	}
+	
+	@Test
+	public void all_courses_having_100Steps() {
+		//Select c from Course c where name like '%100 Steps'
+		
+		// 1. Use Criteria builder to create a Criteria Query returning the
+		// expected result object.
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Course> cq = cb.createQuery(Course.class);
+		
+		// 2. Define roots for tables which are involved in the query
+		Root<Course> courseRoot = cq.from(Course.class);
+		
+		// 3. Define Predicated etc using Criteria Builder
+		Predicate like100Steps = cb.like(courseRoot.get("name"), "%100 Steps");
+		
+		// 4. Add Predicates etc to the Criteria Query
+		cq.where(like100Steps);
 		
 		// 5. Build the TypedQuery using the entity manager and criteria query 
 		TypedQuery<Course> query = em.createQuery(cq.select(courseRoot));
